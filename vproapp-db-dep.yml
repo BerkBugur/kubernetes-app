@@ -17,6 +17,9 @@ spec:
       containers:
       - name: vprodb
         image: berkbugur/vprofiledb
+        volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: vpro-db-data
         ports:
           - name: vprodb-port
             containerPort: 3306
@@ -26,4 +29,19 @@ spec:
               secretKeyRef:
                 name: app-secret
                 key: db-pass
-                
+      nodeSelector:
+        zone: us-east-1a
+      volumes:
+        - name: vpro-db-data
+          # This AWS EBS volume must already exist.
+          # aws ec2 create-volume --availability-zone=us-east-1a --size=3 --volume-type=gp2
+          awsElasticBlockStore:
+             volumeID: MentiondVoumeID
+             fsType: ext4
+      initContainers:
+        - name: busybox
+          image: busybox
+          args: ["rm", "-rf", "/var/lib/mysql/lost+found"]
+          volumeMounts:
+            - name: vpro-db-data
+              mountPath: /var/lib/mysql
