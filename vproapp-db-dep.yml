@@ -36,7 +36,7 @@ spec:
           # This AWS EBS volume must already exist.
           # aws ec2 create-volume --availability-zone=us-east-1a --size=3 --volume-type=gp2
           awsElasticBlockStore:
-             volumeID: vol-09cd91267c53a543a
+             volumeID: vol-064f4c6e84d682a4a
              # and give tag name:KubernetesCluster key:Cluster name 
              fsType: ext4
       initContainers:
