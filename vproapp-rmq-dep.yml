@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: vprormq01
-labels:
-  app: vprormq01
+  labels:
+    app: vprormq01
 spec:
   selector:
     matchLabels:
